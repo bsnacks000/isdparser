@@ -131,3 +131,28 @@ or a specific version
 pip install git+https://github.com/bsnacks000/isdparser.git@v0.1.0
 ```
 
+### Usage 
+
+
+If you want to parse an isd with the default configuration which includes the mappings I created and all points from the `control` and `data` sections, then it is very simple. 
+
+```python
+from isdparser import ISDRecordFactory 
+
+# assumes you downloaded a file but could also be a direct to ftp connection.
+with open('010230-99999-2020.txt', 'r') as f:
+    lines = f.readlines()
+
+# create a list of record objects
+records = [ISDRecordFactory().create(line) for line in lines]    
+
+# build the schema 
+schema = [r.schema() for r in records]
+
+# do things...
+```
+This will produce the schema documented above. It can can serialized directly to json, offloaded to mongo or easily flattened and uploaded to a sql database. 
+
+One caveat for using the high level factory is that it will make a root level key by looking up certain values in the control section. This is a convenience and assumes you want to have some easy to manage data integrity based on the usaf, wban and datestamp. These three fields will need to be given in the control section. If for some reason you don't want this behavior I recommend not using the high level factory and creating your own high level schema.
+
+If you want to modify the API to parse less data then simply create new lists of `control` and `mandatory` measures and give these along with names to the `ISDRecordFactory`. You can do this either using a callable or explicitly with lists of Measures. 
