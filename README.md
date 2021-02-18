@@ -1,4 +1,6 @@
 ## isdparser 
+![badge](https://github.com/bsnacks000/isdparser/workflows/.github/workflows/isdparser.yml/badge.svg)
+
 
 A utility package to help parse noaa isd files from `ftp://ftp.ncdc.noaa.gov/pub/data/noaa`
 
