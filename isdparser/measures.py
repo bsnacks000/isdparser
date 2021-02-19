@@ -77,7 +77,7 @@ class Measure(object):
             val = None
         else:
             val = self._value
-        return { self._name: val }
+        return { 'measure': self._name, 'value': val }
     
 
     def set_value(self, value: str) -> "Measure":

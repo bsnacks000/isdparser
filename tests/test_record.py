@@ -59,16 +59,16 @@ def test_isdrecordfactory_on_record_string(isd_record_string):
             {
                 'name': 'control', 
                 'measures': [
-                    {'usaf': '010230'}, 
-                    {'wban': '99999'}, 
-                    {'date': '20200101'}, 
-                    {'time': '0000'}, 
+                    {'measure': 'usaf', 'value':'010230'}, 
+                    {'measure': 'wban', 'value': '99999'}, 
+                    {'measure': 'date', 'value': '20200101'}, 
+                    {'measure': 'time', 'value': '0000'}, 
                     {'measure': 'data_source_flag', 'value': '4', 'description': 'USAF SURFACE HOURLY observation'}, 
                     {'measure': 'latitude', 'value': 69.067, 'unit': 'angular_degrees'}, 
                     {'measure': 'longitude', 'value': 18.533, 'unit': 'angular_degrees'}, 
                     {'measure': 'code', 'value': 'FM-12', 'description': 'SYNOP Report of surface observation form a fixed land station'}, 
                     {'measure': 'elevation_dimension', 'value': 79.0, 'unit': 'meters'}, 
-                    {'call_letter_identifier': None}, 
+                    {'measure': 'call_letter_identifier', 'value': None}, 
                     {'measure': 'quality_control_process_name', 'value': 'V020', 'description': 'Automated Quality Control'}]}, 
             {
                 'name': 'mandatory', 

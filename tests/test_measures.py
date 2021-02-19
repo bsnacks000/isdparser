@@ -18,10 +18,10 @@ def test_measure():
     assert m.end == 2 
     
     m.set_value('42')
-    tc.assertDictEqual({'my_measure': '42'}, m.schema())
+    tc.assertDictEqual({'measure': 'my_measure', 'value': '42'}, m.schema())
 
     m.set_value('99')
-    tc.assertDictEqual({'my_measure': None }, m.schema())
+    tc.assertDictEqual({'measure': 'my_measure', 'value': None}, m.schema())
 
 
 def test_numeric_measure(): 
@@ -81,10 +81,10 @@ def test_categorical_measure():
 def test_section(mocker): 
 
     mocker.patch.object(NumericMeasure, 'schema', 
-        return_value={'measure': 'my_measure', 'value': 42, 'unit': 'my_unit'})
+        return_value={'name': 'my_measure', 'value': 42, 'unit': 'my_unit'})
 
     mocker.patch.object(CategoricalMeasure, 'schema', 
-        return_value={'measure': 'my_other_measure', 'value': '1', 'description': 'One'})
+        return_value={'name': 'my_other_measure', 'value': '1', 'description': 'One'})
 
 
     def factory(): 
@@ -104,8 +104,8 @@ def test_section(mocker):
     expected = {
         'name': 'my_section', 
         'measures': [
-            {'measure': 'my_measure', 'value': 42, 'unit': 'my_unit'}, 
-            {'measure': 'my_other_measure', 'value': '1', 'description': 'One'}
+            {'name': 'my_measure', 'value': 42, 'unit': 'my_unit'}, 
+            {'name': 'my_other_measure', 'value': '1', 'description': 'One'}
         ]
     }
 
