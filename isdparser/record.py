@@ -63,7 +63,7 @@ class ISDRecordFactory(object):
                 Defaults to None.
         """
         self._control = control if control else ('control', control_measures())
-        self._mandatory = mandatory if mandatory else ('mandatory', mandatory_measures()))
+        self._mandatory = mandatory if mandatory else ('mandatory', mandatory_measures())
         
 
     @staticmethod 
