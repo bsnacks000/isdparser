@@ -49,19 +49,21 @@ class ISDRecordFactory(object):
     __slots__ = ('_control', '_mandatory')
     
     def __init__(self, 
-                 control: Tuple[str, List[Measure]]=('control', control_measures()), 
-                 mandatory: Tuple[str, List[Measure]]=('mandatory', mandatory_measures())):
+                 control: Tuple[str, List[Measure]]=None, 
+                 mandatory: Tuple[str, List[Measure]]=None):
         """Creates an ISDRecord from a single line from an isd file. 
         Object configuration uses Section and Measure object APIs internally. 
+        If control and mandatory were not given, ('control', control_measures()) and ('mandatory', mandatory_measures())) 
+        will be used instead.
 
         Args:
             control (Tuple[str, List[Measure]], optional): A name and list of control measures. 
-                Defaults to ('control', control_measures()).
+                Defaults to None.
             mandatory (Tuple[str, List[Measure]], optional): A name and list of section measures. 
-                Defaults to ('mandatory', mandatory_measures()).
+                Defaults to None.
         """
-        self._control = control
-        self._mandatory = mandatory
+        self._control = control if control else ('control', control_measures())
+        self._mandatory = mandatory if mandatory else ('mandatory', mandatory_measures())
         
 
     @staticmethod 

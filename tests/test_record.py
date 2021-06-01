@@ -5,6 +5,7 @@ tc = unittest.TestCase()
 
 from isdparser.measures import Measure, Section
 from isdparser.record import ISDRecord, ISDRecordFactory
+import copy
 
 def test_isdrecord(mocker): 
 
@@ -48,11 +49,12 @@ def test_isdrecordfactory_static_methods():
 
 
 
-def test_isdrecordfactory_on_record_string(isd_record_string):
+def test_isdrecordfactory_on_record_string(isd_record_strings_list):
     
-    result = ISDRecordFactory().create(isd_record_string)
 
-    expected = {
+    result = [ISDRecordFactory().create(line) for line in isd_record_strings_list]
+
+    exp0 = {
         'datestamp': datetime.datetime(2020, 1, 1, 0, 0, tzinfo=datetime.timezone.utc), 
         'identifier': '010230-99999', 
         'sections': [
@@ -97,4 +99,17 @@ def test_isdrecordfactory_on_record_string(isd_record_string):
         ]
     }
 
-    tc.assertDictEqual(expected, result.schema())
+    exp1 = copy.deepcopy(exp0)
+    exp1['datestamp'] = datetime.datetime(2020, 2, 1, 0, 0, tzinfo=datetime.timezone.utc)
+    exp1['sections'][0]['measures'][2]['value'] = '20200201'
+
+    exp2 = copy.deepcopy(exp0)
+    exp2['datestamp'] = datetime.datetime(2020, 3, 1, 0, 0, tzinfo=datetime.timezone.utc)
+    exp2['sections'][0]['measures'][2]['value'] = '20200301'
+
+    expected = [exp0, exp1, exp2]
+
+    for res in result:
+        datestamp = res.schema()['datestamp']
+        exp = list(filter(lambda x: x['datestamp'] == datestamp, expected))[0]
+        tc.assertDictEqual(exp, res.schema())
