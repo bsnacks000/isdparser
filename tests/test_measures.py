@@ -77,6 +77,19 @@ def test_categorical_measure():
 
     tc.assertDictEqual(expected, m.schema())
 
+    test_mapping_with_whitespace = {
+        'blah': 'blah blah blah'
+    }
+
+    m = CategoricalMeasure('my_measure', Position(1,5), test_mapping_with_whitespace, missing='9')
+    m.set_value('blah    ')
+    expected = {
+        'measure': 'my_measure', 
+        'value': 'blah', 
+        'description': 'blah blah blah'
+    }
+    tc.assertDictEqual(expected, m.schema())
+
 
 def test_section(mocker): 
 
