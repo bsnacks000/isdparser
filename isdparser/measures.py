@@ -86,7 +86,7 @@ class Measure(object):
         Returns:
             Measure: the instance.
         """
-        self._value = value 
+        self._value = value.strip() if type(value) is str else value
         return self
 
 
